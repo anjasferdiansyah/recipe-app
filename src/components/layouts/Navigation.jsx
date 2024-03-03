@@ -1,4 +1,4 @@
-import { Button, Collapse, IconButton } from "@material-tailwind/react";
+import { Collapse, IconButton } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { Bookmark, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -8,20 +8,15 @@ const Navigation = () => {
   const navList = (
     <ul className="my-2 flex flex-col justify-center items-center gap-2 lg:mb-0 lg:mt-0 md:flex-row lg:gap-6">
       <li className="text-sm block">
-        <Link to="/">Home</Link>
-      </li>
-      <li className="text-sm block">
-        <Link to="/recipe">Recipe</Link>
-      </li>
-      <li className="text-sm block">
-        <Button
+        <Link
+          to="/bookmarked"
           className="flex md:hidden gap-2 items-center"
           size="sm"
           variant="outlined"
         >
           <Bookmark />
           <span className="text-sm">Saved Recipes</span>
-        </Button>
+        </Link>
       </li>
     </ul>
   );
@@ -41,22 +36,23 @@ const Navigation = () => {
       <div className="container flex items-center justify-between mx-auto px-8 lg:max-w-6xl">
         <div className="flex gap-2 justify-center items-center">
           <img src="/img/food-logo.png" className="w-10" alt="" />
-          <h1 className="text-sm md:text-md lg:text-lg font-bold font-serif">
+          <Link
+            to="/"
+            className="text-sm md:text-md lg:text-lg font-bold font-serif"
+          >
             RecipeApp
-          </h1>
-        </div>
-        <div className="hidden md:flex justify-center items-center">
-          {navList}
+          </Link>
         </div>
         <div className=" md:flex justify-center items-center">
-          <Button
+          <Link
+            to="/bookmarked"
             className="hidden md:flex gap-2 items-center capitalize"
             size="sm"
             variant="outlined"
           >
             <Bookmark />
             <span className="text-sm">Saved Recipes</span>
-          </Button>
+          </Link>
         </div>
         <IconButton
           variant="text"

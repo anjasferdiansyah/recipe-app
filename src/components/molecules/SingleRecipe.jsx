@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import DetailRecipe from "../atoms/DetailRecipe";
 import { useSelector } from "react-redux";
 

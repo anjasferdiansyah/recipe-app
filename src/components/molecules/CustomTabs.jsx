@@ -6,17 +6,36 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import CategoryCard from "../atoms/CategoryCard";
 import { useDispatch, useSelector } from "react-redux";
 import getRecipe from "../../store/action/getRecipeAction";
 import { PlaceholderCard } from "./PlaceholderCard";
+import CustomCard from "../atoms/CustomCard";
+import {
+  addBookmark,
+  removeBookmark,
+  toogleBookmark,
+} from "../../store/reducer/bookmarkSlice";
 
-export default function CategoryTabs() {
+export default function CustomTabs() {
   const [activeTab, setActiveTab] = useState("breakfast");
   const dispatch = useDispatch();
 
   const recipeData = useSelector((state) => state.recipeByMeal.data);
   const isLoading = useSelector((state) => state.recipeByMeal.isLoading);
+  const bookmarked = useSelector((state) => state.bookmark.data);
+
+  const handleBookmark = (recipe) => {
+    const isBookmarked = bookmarked.find((item) => item.uri === recipe.uri);
+    if (isBookmarked) {
+      dispatch(removeBookmark(recipe));
+      toogleBookmark(recipe);
+      console.log("remove");
+    } else {
+      dispatch(addBookmark(recipe));
+      toogleBookmark(recipe);
+      console.log("add");
+    }
+  };
 
   useEffect(() => {
     dispatch(getRecipe(activeTab));
@@ -81,9 +100,16 @@ export default function CategoryTabs() {
               <>{skeleton}</>
             ) : (
               recipeData &&
-              recipeData.hits.map((item, i) => (
-                <CategoryCard data={item.recipe} key={i} />
-              ))
+              recipeData.hits.map((item, i) => {
+                return (
+                  <CustomCard
+                    onClick={() => handleBookmark(item.recipe)}
+                    data={item.recipe}
+                    isBookmarked={item.recipe.isBookmarked}
+                    key={i}
+                  />
+                );
+              })
             )}
           </TabPanel>
         ))}

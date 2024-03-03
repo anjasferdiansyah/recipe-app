@@ -6,8 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SingleRecipePage from "./pages/SingleRecipePage.jsx";
-import React from "react";
-import SearchRecipePage from "./pages/SearchRecipePage.jsx";
+import BookmarkedRecipePage from "./pages/BookmarkedRecipePage.jsx";
 
 const route = createBrowserRouter([
   {
@@ -15,8 +14,8 @@ const route = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/recipe",
-    element: <SearchRecipePage />,
+    path: "/bookmarked",
+    element: <BookmarkedRecipePage />,
   },
   {
     path: "/recipe/:id",
@@ -25,11 +24,9 @@ const route = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider>
-        <RouterProvider router={route} />
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider>
+      <RouterProvider router={route} />
+    </ThemeProvider>
+  </Provider>
 );

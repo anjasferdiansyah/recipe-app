@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardHeader,
@@ -5,11 +6,11 @@ import {
   CardFooter,
   Button,
 } from "@material-tailwind/react";
-import { Bookmark, Clock } from "lucide-react";
-import { split } from "postcss/lib/list";
+import { Bookmark, BookmarkCheck, Clock } from "lucide-react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-export default function CategoryCard({ data, onClick }) {
+export default function CustomCard({ data, onClick }) {
   const getTime = (minute) => {
     const hour = Math.floor(minute / 60);
     const day = Math.floor(hour / 24);
@@ -28,6 +29,9 @@ export default function CategoryCard({ data, onClick }) {
     const splitId = id.split("_");
     return splitId[1];
   };
+
+  const bookmarked = useSelector((state) => state.bookmark.data);
+  const isBookmarked = bookmarked.find((item) => item.uri === data.uri);
 
   return (
     <Card
@@ -69,8 +73,8 @@ export default function CategoryCard({ data, onClick }) {
             {getTime(data.totalTime).timeUnit}
           </span>
         </div>
-        <Button size="sm">
-          <Bookmark />
+        <Button variant="text" onClick={onClick} size="sm">
+          {isBookmarked ? <BookmarkCheck /> : <Bookmark />}
         </Button>
       </CardFooter>
     </Card>
