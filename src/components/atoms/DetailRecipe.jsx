@@ -1,9 +1,29 @@
 import { Button } from "@material-tailwind/react";
-import { Bookmark } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Bookmark, BookmarkCheck } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addBookmark,
+  removeBookmark,
+  toogleBookmark,
+} from "../../store/reducer/bookmarkSlice";
 
 const DetailRecipe = () => {
   const recipeByIdData = useSelector((state) => state.recipeById.data.recipe);
+  const isBookmarked = useSelector((state) =>
+    state.bookmark.data.find((item) => item.uri === recipeByIdData.uri)
+  );
+
+  const dispatch = useDispatch();
+
+  const handleBookmark = () => {
+    if (isBookmarked) {
+      dispatch(removeBookmark(recipeByIdData));
+      dispatch(toogleBookmark(recipeByIdData));
+    } else {
+      dispatch(addBookmark(recipeByIdData));
+      dispatch(toogleBookmark(recipeByIdData));
+    }
+  };
 
   const getTime = (minute) => {
     const hour = Math.floor(minute / 60);
@@ -32,10 +52,20 @@ const DetailRecipe = () => {
         </div>
         <Button
           size="sm"
+          onClick={handleBookmark}
           className="capitalize flex justify-center items-center px-2 py-1"
         >
-          <Bookmark size={18} />
-          <span className="text-sm font-semibold">Save</span>
+          {isBookmarked ? (
+            <>
+              <BookmarkCheck size={20} />
+              <span className="text-sm">Saved</span>
+            </>
+          ) : (
+            <>
+              <Bookmark size={20} />
+              <span className="text-sm">Save</span>
+            </>
+          )}
         </Button>
       </div>
       <div className="grid grid-cols-3 justify-center w-full">
