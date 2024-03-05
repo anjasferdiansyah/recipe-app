@@ -8,9 +8,9 @@ import {
 } from "../../store/reducer/bookmarkSlice";
 
 const DetailRecipe = () => {
-  const recipeByIdData = useSelector((state) => state.recipeById.data.recipe);
+  const recipeByIdData = useSelector((state) => state.recipeById?.data.recipe);
   const isBookmarked = useSelector((state) =>
-    state.bookmark.data.find((item) => item.uri === recipeByIdData.uri)
+    state.bookmark.data.find((item) => item.uri === recipeByIdData?.uri)
   );
 
   const dispatch = useDispatch();
